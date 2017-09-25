@@ -4,27 +4,44 @@ author: "Sophie_Berube"
 date: "9/15/2017"
 output: pdf_document
 ---
+Testing functions in rplos package. 
+library(rplos)
+Facetplos: searching through the entire plos texts for words, and showing in how many articles theses words appear and in which kind of articles (journal and subject associated with the article). Useful for associating a statistical technique with a subject (ex. Bayes in genomics). 
+```{r, facetplos}
+ANOVA<- facetplos(q='*:*',facet.field=c('journal'),facet.query='ANOVA')
+str(ANOVA$facet_fields$journal)
 
-```{r, }
-knitr::opts_chunk$set(echo = TRUE)
+
+
+Bayes<- facetplos(q=list('bayes','bayesian'),facet.field=c('journal','subject'),
+                  facet.date.end='NOW')
+
+  test<- facetplos(q='alcohol', facet.field=c('journal','subject'))
+  
+  test$facet_fields$subject
+ANOVA$facet_fields$journal
+?facetplos
+Bayes
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Highplos: list of journal articles that contains certain words, can filter by section, since we are interested in statistical methods, we can filter by the methods section. 
+```{r, highplos}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+highplos(q='ANOVA',hl.fl=c('methods','materials and methods', 'methods and materials'))
 
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+Plosword: lists and plots how many articles use certain words. 
+```{r, plosword}
 
-You can also embed plots, for example:
+out<- plosword(list('ANOVA','bayesian','linear regression'),vis=TRUE)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+out$table
+out$plot
 ```
+Plotting through time: shows a plot of the number of article using specific words as a function of time, useful for time trends. 
+```{r plot_throughtime}
+plot_throughtime(terms=list('bayesian','bayes'),limit=300)
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```
