@@ -1,0 +1,15 @@
+---
+title: "Prediction..."
+author: "Sophie_Berube"
+date: "9/28/2017"
+output: pdf_document
+---
+
+## Introduction
+
+Since the start of the nineteenth century when Legendre and Gauss published their least squares method, an early form of regression, as a way to describe bodies orbiting aroud the sun, statistical methods have been applied to a wide range of scientific problems. During the early 1800s through the beginning of the twentieth century, the notion of specialization in research and discovery as we understand it today did not exist. Francis Galton a british scientisit and father of the term "regression", first noticed the phenomenon of regression to the mean in a biological context. In this sense, statistics informed applied science as much as applied science informed statistical advances. However, in the latter half of the twentieth century with an explosion of tecnhology came increased scientific and mathematical specialization. People making siginificant advances in statistical methodology are now almost exclusively trained statisticians who can be brought on to applied scientific projects as co-investigators but do not conduct primary research in the natural or physical sciences the way those in the nineteenth century might have.
+
+As a result of this fragmentalization of scientific research, methodological advances are made often in the statistical community and published in methodological papers. Oftentimes, software or computer code is subsequently developed to make the methodology easily applicable to a variety of scientific problems. After this process, the methodology begins to appear as a means of statistical analysis in various applied scientific fields ranging from neuroscience to genetics and genomics and even to physical sciences like astronomy. 
+
+The following analysis proposes a predictive model (imprecise or incorrect wording??) that attempts to find the next major statistical methodologies that will appear in applied science journals. More specifically, we (nobody else is writing this with me but we is more common in journals??) hypothesize that if the number of statistical methodology papers discussing a particular method increases, then this method after some lag time, will appear with greater frequency in applied scientific articles. 
+

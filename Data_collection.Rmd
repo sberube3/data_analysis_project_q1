@@ -4,21 +4,123 @@ author: "Sophie_Berube"
 date: "9/25/2017"
 output: html_document
 ---
-
+library(rplos)
 ```{r}
+ANOVA<- facetplos(q='*:*',facet.field=c('journal','subject'),facet.query='ANOVA')
+str(ANOVA$facet_fields$journal)
+str(ANOVA$facet_fields$subject)
+
+bayes<- facetplos(q="*:*",facet.field=c('journal', 'subject'),facet.query='bayes,bayesian')
+str(bayes$facet_fields$journal)
+str(bayes$facet_fields$subject)
+
+linReg<-facetplos(q='*:*', facet.field=c('journal','subject'),facet.query='linear regression')
+
+str(linReg$facet_fields$journal)
+str(linReg$facet_fields$subject)
+
+
+lmm<- facetplos(q='*:*', facet.field=c('journal','subject'),facet.query='linear mixed models, mixed models')
+str(lmm$facet_fields$journal)
+str(lmm$facet_fields$subject)
+
+gee<- facetplos(q='*:*', facet.field= c('journal','subject'), facet.query = 'generalized estimating equations, generalized estimating equation')
+str(gee$facet_fields$journal)
+str(gee$facet_fields$subject)
+
+machinelearning<- facetplos(q='*:*', facet.field=c('journal','subject'), facet.query='machine learning')
+
+str(machinelearning$facet_fields$journal)
+str(machinelearning$facet_fields$subject)
+
+svm<- facetplos(q='*:*', facet.field=c('journal','subject'),facet.query='support vector machine, support vector machines')
+str(machinelearning$facet_fields$journal)
+str(machinelearning$facet_fields$subject)
+
+bootstrap<- facetplos(q='*:*', facet.field=c('journal','subject'),facet.query='bootstrap')
+
+str(bootstrap$facet_fields$journal)
+str(bootstrap$facet_field$journal)
+
+deepLearning<- facetplos(q='*:*', facet.field=c('journal','subject'),facet.query='deep learning')
+
+str(deepLearning$facet_field$journal)
+str(deepLearning$facet_field$journal)
+
+#######################################################
+# putting this into a tidy dataframe 
+#######################################################
+
+key_words<- c("ANOVA", "Bayes, Bayesian","Linear Regression","Linear Mixed Models, Mixed Models","Generalized Estimating Equations", "Machine Learning", "Support Vector Machine", "Bootstrap", "deep learning")
+
 
 ```
 
-```{r cars}
-summary(cars)
+```{r, searchplos}
+
+?searchplos
+plosfields
+
+key_words<- c("ANOVA", "Bayes, Bayesian","Linear Regression","Linear Mixed Models, Mixed Models","Generalized Estimating Equations", "Machine Learning", "Support Vector Machine", "Bootstrap", "deep learning")
+
+ANOVA_1<- searchplos(q='ANOVA',fl='materials_and_methods', limit=0)
+ANOVA_1$meta
+
+bayes_1<- searchplos(q='bayesian',fl='materials_and_methods', limit=0)
+bayes_1$meta
+
+linReg_1<- searchplos(q='linear regression',fl='materials_and_methods', limit=0)
+linReg_1$meta
+
+lmm_1<- searchplos(q='linear mixed models',fl='materials_and_methods', limit=0)
+lmm_1$meta
+
+gee_1<- searchplos(q='generalized estimating equations', fl='materials_and_methods', limit=0)
+gee_1$meta
+
+machinelearning_1<- searchplos(q='machine learning', fl='materials_and_methods', limit=0)
+machine_learning_1$meta
+
+svm_1<-searchplos(q='support vector machine', fl='materials_and_methods', limit=0)
+svm_1$meta
+
+bootstrap_1<-searchplos(q='bootstrap',fl='materials_and_methods', limit=0)
+bootstrap_1$meta
+
+deepLearning_1<- searchplos(q='deep learning',fl='materials_and_methods', limit=0)
+deeplearning_1$meta
 ```
 
-## Including Plots
+```{r, plots}
+words<- plosword(list("ANOVA", "bayes", "bayesian","linear regression","linear mixed models", "mixed models","generalized estimating equations", "machine learning", "support vector machine", "bootstrap", "deep learning"),vis=TRUE)
 
-You can also embed plots, for example:
+words
+library("ggplot2")
+ANOVA_time<- plot_throughtime(terms="ANOVA",limit=10000) + geom_line(size=2,color='black')
+ANOVA_time
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+bayes_time<- plot_throughtime(terms="bayesian",limit=10000) + geom_line(size=2,color='black')
+bayes_time
+
+linearregression_time<- plot_throughtime(terms="linear regression",limit=10000) + geom_line(size=2,color='black')
+linearregression_time
+
+lmm_time<- plot_throughtime(terms="linear mixed model",limit=10000) + geom_line(size=2,color='black')
+lmm_time
+
+gee_time<- plot_throughtime(terms="generalized estimating equations",limit=10000) + geom_line(size=2,color='black')
+gee_time
+
+machinelearning_time<- plot_throughtime(terms="machine learning",limit=10000) + geom_line(size=2,color='black')
+machinelearning_time
+
+svm_time<- plot_throughtime(terms="support vector machine",limit=10000) + geom_line(size=2,color='black')
+svm_time
+
+bootstrap_time<- plot_throughtime(terms="bootstrap",limit=10000) + geom_line(size=2,color='black')
+bootstrap_time
+
+deeplearning_time<- plot_throughtime(terms="deep learning",limit=10000) + geom_line(size=2,color='black')
+deeplearning_time
+
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
