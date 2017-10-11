@@ -1,71 +1,57 @@
 ---
-title: "Prediction..."
-author: "Sophie_Berube"
+title: "Trends Over Time In Common Statistical Methods"
+author: "Sophie Berube"
 date: "9/28/2017"
 output: pdf_document
 ---
 
+## Abstract
+
+
 ## Introduction
-
-Since the start of the nineteenth century when Legendre and Gauss published their least squares method, an early form of regression, as a way to describe bodies orbiting aroud the sun, statistical methods have been applied to a wide range of scientific problems. During the early 1800s through the beginning of the twentieth century, the notion of specialization in research and discovery as we understand it today did not exist. Francis Galton a british scientisit and father of the term "regression", first noticed the phenomenon of regression to the mean in a biological context. In this sense, statistics informed applied science as much as applied science informed statistical advances. However, in the latter half of the twentieth century with an explosion of tecnhology came increased scientific and mathematical specialization. People making siginificant advances in statistical methodology are now almost exclusively trained statisticians who can be brought on to applied scientific projects as co-investigators but do not conduct primary research in the natural or physical sciences the way those in the nineteenth century might have.
-
-As a result of this fragmentalization of scientific research, methodological advances are made often in the statistical community and published in methodological papers. Oftentimes, software or computer code is subsequently developed to make the methodology easily applicable to a variety of scientific problems. After this process, the methodology begins to appear as a means of statistical analysis in various applied scientific fields ranging from neuroscience to genetics and genomics and even to physical sciences like astronomy. 
-
-The following analysis proposes a predictive model (imprecise or incorrect wording??) that attempts to find the next major statistical methodologies that will appear in applied science journals. More specifically, we (nobody else is writing this with me but we is more common in journals??) hypothesize that if the number of statistical methodology papers discussing a particular method increases, then this method after some lag time, will appear with greater frequency in applied scientific articles as a method of data analysis. 
+Over the past decade, machine learning algorithms have become increasingly accessible to the scientific community as a means of data analysis. Through the use of various coding languages such as R and Python, scientists have sucessfully implemented machine learning algorithms in a variety of applied fields like neuroscience, genetics, proteomics and cell and molecular biology. Under the umbrella of machine learning advances, various other tools have been developed by statisticians, mathematicians and computer scientist and are beginning to make a significant impact in the larger scientific community. Coined by Hinton in 2006, deep learning has begun to emerge as one of these modern methods of analysis, meeting the scientific community's ever growing needs demands for tools that can handle increasingly complex and large datasets. Similarly, artifical neural networks seek to harness the properties of the nervous system to analyze a variety of data and rely on similar machine learning related concepts to attack various problems. 
 
 
-## Methods and Materials
+The following analysis uses the articles in the various journals of the Public Libray of Science to assess whether modern statistical methods like machine learning, deep learning and neural networks are surpassing traditional statistical methods like ANOVA, linear regression, bootstraps and bayesian methods in popularity across applied scientific fields. 
 
-We will begin by defining a statistical methodology paper as a paper where the first or last author, are affiliated with a biostatistics, statistics or mathematics department? (posibly will change to one published in plos computational biology). 
-Need to think about defining what is an increase in frequency of methodology in methodological papers, could use IQR? or something else?
+The Public Library of Science or PLOS began publishing articles in 2003 in PLOS Biology and has since added eight journals to the repertoire in a variety of fields including medicine, computational biology, genetics, clinical trials, pathogens and tropical diseases. PLOS ONE, the largest of the PLOS journals, publishes more articles annually than any other current scientific journal. An open access, pay to publih model ensures that articles are peer rieviewed to verify that scientific standards are met but submissions are not turned down based on percieved lack of importance or impact to a particular field's advancement the way they would be in many prestigious mainstream jourals like Nature or Cell. This makes PLOS journals a fairly adequate representation of average scientific research over the past decade, and thus an appropriate database to assess statistical methodologies used by the scientific community over the past decade. 
 
-Need some ROC curve or positive predictive value for how well the mention of a statistical method in the materials and methods section will predict the use of the actual method in the applied paper? How will this error be represented, confidence intervals??
-
-
-## False Discovery Calculation
-
-In order to assess how well the presence of certain key words in the body of an article correlate with the actual use of a particular statistical methodology in the paper a false discovery rate was computed using the  `rplos` function `highplos`. More specifically, for each of the 10 key words outlined above, a sample of 10 articles that mentioned the word were found using the `highplos` function. Then the article was visually inspected to see whether the statistical methodology of interest was actually used in the study. Out of 100 articles observed, 17 contained a key word without using that particular techinque in the study. Thus the false discovery rate is roughly 17%.
+The R package `rplos` which accesses articles from all nine currently published PLOS journals since their respective inceptions, was used in this analysis. 
 
 
-## Very preliminary result plots (maybe bleeding over into EDA?)
+## Methods
+
+First, a list of ten key words representing both modern and traditional data analysis techniques was assembled by looking through a variety of plos articles and based on fundamental tecnhniques discussed in most basic statistics textbooks. The five words meant to represent traditional statistical analysis methods were ANOVA, bayesian, linear regression, mixed effect model, generalized estimating equation and bootstrap. Similarly four words meant to represent modern statistical methods are machine learning, deep learning, support vector machine, artifical neural network. 
+
+In order to visualize their distribution over all publihed articles in PLOS over time, the function `plot_overtime` from the `rplos` package was used. The limit for each word was set to 10,000 articles which means that 10,000 articles mentioning each of the key words were sampled and were attributed to a particular month based on their date of publication. Counts for various months were plotted from the period 2003 to October of 2017 and a loess curve was fit to these plots. Terms were plotted pairwise and each possible pairing of key phrases was observed with the corresponding loess curves. 
+
+Quasipoisson models were fit for each key word with a count of articles mentioning a particular key word as the outcome and time points as the regressor, in order to identify possible differences in trends over time. More specifically, using visual inspection from the loess plots, the data were split up into a timeperiod of increasing counts for all terms and a timeperiod of decreasing or stable counts for all terms. For each key word, a different quasipoisson model was fit for both increasing and decreasing counts periods and the coefficients for the time points were compared both within key words and across key words. 
+
+Since the `plot_throughtime` function inclues any articles that mention the key words in the counts for a particular timepoint, a false discovery rate was estimated to give an idea of how many articles might mention a key word without it being used as a statistical analysis method in the paper. This rate was estimated using the `highplos` function which returns the API (or unique identifier) of articles that contain a particular key word. For each key word or phrase, ten of these articles  were visually inspected to determine whether or not that particular statistical method was used in the analysis. 
+
+## Results
+
+The estimate of the false discovery rate was found to be 16 out of 100 or 16%. Importantly, the number of falsely discovered articles was not consistent across all key phrases. Specifically, the phrases generalized estimating equation, deep learning and artificial neural network had higher number of these incorrect identifications, specifically of ten scanned articles the key phrase generalized estimating equations was incorrectly identified as a method of analysis in seven of ten articles, deep learning was incorrectly identified as a method in two of ten articles as was the phrase artifical neural networks. All other phrases were incorrectly identified in none, or one article. 
+
+The pairwise plots with loess curves reveal very similar curves, in other words low distance between the two curves for any timepoint,for the following pairs of terms. ANOVA and: linear regression, mixed effect model, generalized estimating equation and bootstrap. Bayesian and: linear regression,mixed effect model, generalized estimating equation,support vector machine and bootstrap. Linear regression and: mixed effect model, generalized estimating equation and bootstrap. Mixed effect model and: generalized estimating equation, support vector machine and bootstrap. Generalized estimating equation and: support vector machine and bootstrap. Machine learning and: support vector machine and bootsrtap. Deep learning and artificial neural network. 
+
+The pairwise plots with loess curves reveal different curves, in other words high distance between the two curves for several timepoints,for the following pairs of terms:ANOVA and: machine learning, support vector machine, deep learning and artificial neural network. Bayesian and: machine learning,  deep learning and artifical neural network. Linear regression and: machine learning, support vector machine, deep learning and artificial neural network. Mixed effect model and: machine learning, deep learning and artificial neural network. Generalized esstimating equation and: machine learning, deep learning and artifical neural network. Machine learning and: deep learning, bootstrap and artificial neural network. Support vector machine anddeep learning. Support vector machine and artificial neural network. Deep learning and bootstrap.  Bootstrap and artifical neural network. 
+
+However these different curve have interesting patterns within them. Across all terms, the loess curves are increasing from years 2003 to 2015 and decreasing after 2015. The rate of decrease in the counts of articles after 2015 differs in the following plots.
+In the pairwise comparison plot between ANOVA and machine learning, wile ANOVA has a steep rate of decrease after 2015 machine learning has much more shallow rate of decrease after 2015, and while the counts for articles displaying machine learning are consistently below those for articles displaying ANOVA, sometime during late 2015 and into early 2017, the loess lines for the two counts cross and more articles display machine learning than ANOVA. The similar phenomenons can be observed for ANOVA and support vector machines, AONOVA and deep learning, ANOVA and artifical neural networks, bayesian and machine learning, bayesian and deep learning, bayesian and artifical neural network, linear regression and machine learning, linear regression and deep learning, linear regression and artifical neural network, mixed effect model and machine learning, mixed effect model and deep learning, mixed effect model and artificial neural network, generalized estimating equation and machine learning, generalized estimating equation and artificial neural network,generalized estimating equation and artificial neural network, machine learning and bootstrap, deep learning and bootstrap and bootstrap and artifical neural network.  
+
+Finally, when looking at the graphs some curves, while far apart seem to have a similar shape after 2015. These include machine learning and aritifical neural network and machine learning and deep learning. 
+
+
 
 ```{r}
-library(rplos)
-library(ggplot2)
-ANOVA_time<- plot_throughtime(terms="ANOVA",limit=10000) + geom_line(size=2,color='black')
-ANOVA_time
-
-bayes_time<- plot_throughtime(terms="bayesian",limit=10000) + geom_line(size=2,color='black')
-bayes_time
-
-linearregression_time<- plot_throughtime(terms="linear regression",limit=10000) + geom_line(size=2,color='black')
-linearregression_time
-
-lmm_time<- plot_throughtime(terms="linear mixed model",limit=10000) + geom_line(size=2,color='black')
-lmm_time
-
-gee_time<- plot_throughtime(terms="generalized estimating equations",limit=10000) + geom_line(size=2,color='black')
-gee_time
-
-machinelearning_time<- plot_throughtime(terms="machine learning",limit=10000) + geom_line(size=2,color='black')
-machinelearning_time
-
-svm_time<- plot_throughtime(terms="support vector machine",limit=10000) + geom_line(size=2,color='black')
-svm_time
-
-bootstrap_time<- plot_throughtime(terms="bootstrap",limit=10000) + geom_line(size=2,color='black')
-bootstrap_time
-
-deeplearning_time<- plot_throughtime(terms="deep learning",limit=10000) + geom_line(size=2,color='black')
-deeplearning_time
-
-neuralNet_time<- plot_throughtime(terms="neural network", limit=10000)
-geom_line(size=2,color='black')
-neuralNet_time
-
-
-
 ```
+
+
+
+
+
+
 
 
 

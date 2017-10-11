@@ -1,0 +1,229 @@
+---
+title: "Plots"
+author: "Sophie_Berube"
+date: "10/10/2017"
+output: pdf_document
+---
+
+```{r}
+library(rplos)
+library(ggplot2)
+list("ANOVA", "bayes", "bayesian","linear regression","linear mixed models", "mixed models","generalized estimating equations", "machine learning", "support vector machine", "bootstrap", "deep learning","neural network")
+
+#pairwise comparisons ANOVA
+
+ANOVA_Bayesian<- plot_throughtime(terms=c("ANOVA","bayesian"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ANOVA_Bayesian
+
+ANOVA_LR<- plot_throughtime(terms=c("ANOVA","linear regression"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ANOVA_LR
+
+ANOVA_MM<- plot_throughtime(terms=c("ANOVA","mixed effect model"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ANOVA_MM
+
+ANOVA_GEE<- plot_throughtime(terms=c("ANOVA","generalized estimating equation"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+ANOVA_GEE
+
+ANOVA_ML<-  plot_throughtime(terms=c("ANOVA","machine learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ANOVA_ML
+
+ANOVA_SVM<-  plot_throughtime(terms=c("ANOVA","support vector machine"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ANOVA_SVM
+
+ANOVA_DL<-  plot_throughtime(terms=c("ANOVA","deep learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ANOVA_DL
+
+ANOVA_Btstp<-  plot_throughtime(terms=c("ANOVA","bootstrap"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ANOVA_Btstp
+
+ANOVA_NN<-  plot_throughtime(terms=c("ANOVA","artificial neural network"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ANOVA_NN
+
+
+
+#pairwise comparisons bayesian
+
+Bayesian_LR<- plot_throughtime(terms=c("linear regression","bayesian"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+Bayesian_LR
+
+Bayesian_MM<- plot_throughtime(terms=c("bayesian","mixed effect model"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+Bayesian_MM
+
+Bayesian_GEE<- plot_throughtime(terms=c("bayesian","generalized estimating equation"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+Bayesian_GEE
+
+Bayesian_ML<-  plot_throughtime(terms=c("bayesian","machine learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")+geom_smooth(method="loess")
+
+Bayesian_ML
+
+Bayesian_SVM<-  plot_throughtime(terms=c("bayesian","support vector machine"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+Bayesian_SVM
+
+Bayesian_DL<-  plot_throughtime(terms=c("bayesian","deep learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+Bayesian_DL
+
+Bayesian_Btstp<-  plot_throughtime(terms=c("bayesian","bootstrap"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+Bayesian_Btstp
+
+Bayesian_NN<-  plot_throughtime(terms=c("bayesian","artificial neural network"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+Bayesian_NN
+
+
+#pairwise comparisons linear regression
+
+
+LR_MM<- plot_throughtime(terms=c("linear regression","mixed effect model"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+LR_MM
+
+LR_GEE<- plot_throughtime(terms=c("linear regression","generalized estimating equation"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+LR_GEE
+
+LR_ML<-  plot_throughtime(terms=c("linear regression","machine learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+LR_ML
+
+LR_SVM<-  plot_throughtime(terms=c("linear regression","support vector machine"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+LR_SVM
+
+LR_DL<-  plot_throughtime(terms=c("linear regression","deep learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+LR_DL
+
+LR_Btstp<-  plot_throughtime(terms=c("linear regression","bootstrap"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+LR_Btstp
+
+LR_NN<-  plot_throughtime(terms=c("linear regression","artificial neural network"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+LR_NN
+
+
+
+#pairwise comparisons mixed models
+
+
+
+MM_GEE<- plot_throughtime(terms=c("mixed effect model","generalized estimating equation"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+MM_GEE
+
+MM_ML<-  plot_throughtime(terms=c("mixed effect model","machine learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+MM_ML
+
+MM_SVM<-  plot_throughtime(terms=c("mixed effect model","support vector machine"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+MM_SVM
+
+MM_DL<-  plot_throughtime(terms=c("mixed effect model","deep learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+MM_DL
+
+MM_Btstp<-  plot_throughtime(terms=c("mixed effect model","bootstrap"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+MM_Btstp
+
+MM_NN<-  plot_throughtime(terms=c("mixed effect model","artificial neural network"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+MM_NN
+
+
+
+#pairwise comparisons gee
+
+GEE_ML<-  plot_throughtime(terms=c("generalized estimating equation","machine learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+GEE_ML
+
+GEE_SVM<-  plot_throughtime(terms=c("generalized estimating equation","support vector machine"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+GEE_SVM
+
+GEE_DL<-  plot_throughtime(terms=c("generalized estimating equation","deep learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+GEE_DL
+
+GEE_Btstp<-  plot_throughtime(terms=c("generalized estimating equation","bootstrap"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+GEE_Btstp
+
+GEE_NN<-  plot_throughtime(terms=c("generalized estimating equation","artificial neural network"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+GEE_NN
+
+
+
+
+#pairwise comparisons machine learning
+
+ML_SVM<-  plot_throughtime(terms=c("machine learning","support vector machine"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ML_SVM
+
+ML_DL<-  plot_throughtime(terms=c("machine learning","deep learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ML_DL
+
+ML_Btstp<-  plot_throughtime(terms=c("machine learning","bootstrap"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")+geom_smooth(method="loess")
+
+ML_Btstp
+
+ML_NN<-  plot_throughtime(terms=c("machine learning","artificial neural network"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+ML_NN
+
+
+
+#pairwise comparisons support vector machine
+
+
+SVM_DL<-  plot_throughtime(terms=c("support vector machine","deep learning"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+SVM_DL
+
+SVM_Btstp<-  plot_throughtime(terms=c("support vector machine","bootstrap"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+SVM_Btstp
+
+SVM_NN<-  plot_throughtime(terms=c("support vector machine","artificial neural network"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+SVM_NN
+
+
+#pairwise comparisons deep learning
+
+
+
+DL_Btstp<-  plot_throughtime(terms=c("deep learning","bootstrap"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+DL_Btstp
+
+DL_NN<-  plot_throughtime(terms=c("deep learning","artificial neural network"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+DL_NN
+
+
+#pairwise comparisons bootstrap
+
+
+Btstp_NN<-  plot_throughtime(terms=c("bootstrap","artificial neural network"),limit=10000) + geom_line(size=1,color="black")+geom_smooth(method="loess")
+
+Btstp_NN
+
+
+```
+
+

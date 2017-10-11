@@ -6,7 +6,7 @@ output: html_document
 ---
 library(rplos)
 ```{r}
-ANOVA<- facetplos(q='*:*',facet.field=c('journal','subject'),facet.query='ANOVA')
+ANOVA<- facetplos(q='ANOVA',facet.field=c('journal','subject'),facet.query='ANOVA')
 str(ANOVA$facet_fields$journal)
 str(ANOVA$facet_fields$subject)
 
@@ -51,7 +51,7 @@ str(deepLearning$facet_field$journal)
 # putting this into a tidy dataframe 
 #######################################################
 
-key_words<- c("ANOVA", "Bayes, Bayesian","Linear Regression","Linear Mixed Models, Mixed Models","Generalized Estimating Equations", "Machine Learning", "Support Vector Machine", "Bootstrap", "deep learning")
+key_words<- c("ANOVA", "Bayes, Bayesian","Linear Regression","Linear Mixed Models, Mixed Models","Generalized Estimating Equations", "Machine Learning", "Support Vector Machine", "Bootstrap", "deep learning","Markov Chain Monte Carlo, MCMC")
 
 
 ```
@@ -59,6 +59,8 @@ key_words<- c("ANOVA", "Bayes, Bayesian","Linear Regression","Linear Mixed Model
 ```{r, searchplos}
 
 ?searchplos
+
+journ
 plosfields
 
 key_words<- c("ANOVA", "Bayes, Bayesian","Linear Regression","Linear Mixed Models, Mixed Models","Generalized Estimating Equations", "Machine Learning", "Support Vector Machine", "Bootstrap", "deep learning")
@@ -87,8 +89,8 @@ svm_1$meta
 bootstrap_1<-searchplos(q='bootstrap',fl='materials_and_methods', limit=0)
 bootstrap_1$meta
 
-deepLearning_1<- searchplos(q='deep learning',fl='materials_and_methods', limit=0)
-deeplearning_1$meta
+deepLearning_1<- searchplos(q='deep learning',fl='materials_and_methods', limit=8)
+deepLearning_1$meta
 ```
 
 ```{r, plots}
@@ -97,7 +99,7 @@ words<- plosword(list("ANOVA", "bayes", "bayesian","linear regression","linear m
 words
 library("ggplot2")
 ANOVA_time<- plot_throughtime(terms="ANOVA",limit=10000) + geom_line(size=2,color='black')
-ANOVA_time
+ANOVA_time$data
 
 bayes_time<- plot_throughtime(terms="bayesian",limit=10000) + geom_line(size=2,color='black')
 bayes_time
@@ -117,10 +119,612 @@ machinelearning_time
 svm_time<- plot_throughtime(terms="support vector machine",limit=10000) + geom_line(size=2,color='black')
 svm_time
 
-bootstrap_time<- plot_throughtime(terms="bootstrap",limit=10000) + geom_line(size=2,color='black')
-bootstrap_time
+bootstrap_time<- plot_throughtime(terms="bootstrap",limit=100) + geom_line(size=2,color='black')+ geom_smooth(size=1,color="red")
+bootstrap_time$data
+
+bootstrap_time1<- plot_throughtime(terms="bootstrap",limit=10000) + geom_line(size=2,color='black')+ geom_smooth(size=1,color="red")
+bootstrap_time1$data
 
 deeplearning_time<- plot_throughtime(terms="deep learning",limit=10000) + geom_line(size=2,color='black')
 deeplearning_time
 
+neuralNet_time<- plot_throughtime(terms="neural network", limit=10000)
+geom_line(size=2,color='black')
+neuralNet_time
+
 ```
+```{r}
+
+words<- plosword(list("ANOVA", "bayes", "bayesian","linear regression","linear mixed models", "mixed models","generalized estimating equations", "machine learning", "support vector machine", "bootstrap", "deep learning"),vis=TRUE)
+
+
+output_A<- highplos(q='ANOVA',hl.fl='body',rows=10)
+output_A
+
+output_B<-highplos(q='bayesian',hl.fl='body',rows=10)
+output_B
+
+output_LR<- highplos(q='linear regression',hl.fl='body',rows=10)
+output_LR
+
+output_LMM<-highplos(q='linear mixed models',hl.fl='body',rows=10)
+output_LMM
+
+output_MM<- highplos(q='mixed models',hl.fl='materials_and_methods',rows=10)
+output_MM
+
+output_GEE<-highplos(q='generalized estimating equations',hl.fl='body',rows=10)
+output_GEE
+
+output_ML<- highplos(q='machine learning',hl.fl='body',rows=10)
+output_ML
+
+output_SVM<-highplos(q='support vector machine',hl.fl='body',rows=10)
+output_SVM
+
+output_BT<- highplos(q='bootstrap',hl.fl='body',rows=10)
+output_BT
+
+output_DL<-highplos(q='deep learning',hl.fl='body',rows=10)
+output_DL
+
+output_NN<- highplos(q='neural network', hl.fl='body', rows=10)
+output_NN
+```
+
+
+```{r}
+?searchplos
+
+plosfields
+```
+
+
+```{r, Calculating Total Article Counts}
+
+?facetplos
+
+
+sept_03_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2003-09-01T00:00:00Z",facet.date.end = "2003-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+
+
+sept_03_all$facet_dates
+
+oct_03_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2003-10-01T00:00:00Z",facet.date.end = "2003-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+
+oct_03_all$facet_dates
+
+nov_03_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2003-11-01T00:00:00Z",facet.date.end = "2003-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+
+nov_03_all$facet_dates
+
+dec_03_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2003-12-01T00:00:00Z",facet.date.end = "2003-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+
+dec_03_all$facet_dates
+
+jan_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-01-01T00:00:00Z",facet.date.end = "2004-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_04_all$facet_dates
+
+
+feb_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-02-01T00:00:00Z",facet.date.end = "2004-02-29T00:00:00Z", facet.date.gap='+1MONTH')
+feb_04_all$facet_dates
+
+mar_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-03-01T00:00:00Z",facet.date.end = "2004-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_04_all$facet_dates
+
+apr_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-04-01T00:00:00Z",facet.date.end = "2004-04-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_04_all$facet_dates
+
+may_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-05-01T00:00:00Z",facet.date.end = "2004-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_04_all$facet_dates
+
+jun_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-06-01T00:00:00Z",facet.date.end = "2004-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_04_all$facet_dates
+
+jly_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-07-01T00:00:00Z",facet.date.end = "2004-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_04_all$facet_dates
+
+aug_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-08-01T00:00:00Z",facet.date.end = "2004-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_04_all$facet_dates
+
+sept_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-09-01T00:00:00Z",facet.date.end = "2004-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_04_all$facet_dates
+
+oct_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-10-01T00:00:00Z",facet.date.end = "2004-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_04_all$facet_dates
+
+nov_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-11-01T00:00:00Z",facet.date.end = "2004-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_04_all$facet_dates
+
+dec_04_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2004-12-01T00:00:00Z",facet.date.end = "2004-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_04_all$facet_dates
+
+jan_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-01-01T00:00:00Z",facet.date.end = "2005-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_05_all$facet_dates
+
+feb_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-02-01T00:00:00Z",facet.date.end = "2005-02-28T00:00:00Z", facet.date.gap='+1MONTH')
+feb_05_all$facet_dates
+
+mar_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-03-01T00:00:00Z",facet.date.end = "2005-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_05_all$facet_dates
+
+apr_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-05-01T00:00:00Z",facet.date.end = "2005-05-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_05_all$facet_dates
+
+may_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-05-01T00:00:00Z",facet.date.end = "2005-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_05_all$facet_dates
+
+jun_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-06-01T00:00:00Z",facet.date.end = "2005-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_05_all$facet_dates
+
+jly_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-07-01T00:00:00Z",facet.date.end = "2005-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_05_all$facet_dates
+
+aug_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-08-01T00:00:00Z",facet.date.end = "2005-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_05_all$facet_dates
+
+sept_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-09-01T00:00:00Z",facet.date.end = "2005-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_05_all$facet_dates
+
+oct_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-10-01T00:00:00Z",facet.date.end = "2005-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_05_all$facet_dates
+
+nov_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-11-01T00:00:00Z",facet.date.end = "2005-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_05_all$facet_dates
+
+dec_05_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2005-12-01T00:00:00Z",facet.date.end = "2005-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_05_all$facet_dates
+
+
+jan_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-01-01T00:00:00Z",facet.date.end = "2006-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_06_all$facet_dates
+
+feb_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-02-01T00:00:00Z",facet.date.end = "2006-02-28T00:00:00Z", facet.date.gap='+1MONTH')
+feb_06_all$facet_dates
+
+mar_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-03-01T00:00:00Z",facet.date.end = "2006-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_06_all$facet_dates
+
+apr_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-04-01T00:00:00Z",facet.date.end = "2006-04-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_06_all$facet_dates
+
+may_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-05-01T00:00:00Z",facet.date.end = "2006-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_06_all$facet_dates
+
+jun_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-06-01T00:00:00Z",facet.date.end = "2006-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_06_all$facet_dates
+
+jly_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-07-01T00:00:00Z",facet.date.end = "2006-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_06_all$facet_dates
+
+aug_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-08-01T00:00:00Z",facet.date.end = "2006-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_06_all$facet_dates
+
+sept_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-09-01T00:00:00Z",facet.date.end = "2006-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_06_all$facet_dates
+
+oct_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-10-01T00:00:00Z",facet.date.end = "2006-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_06_all$facet_dates
+
+nov_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-11-01T00:00:00Z",facet.date.end = "2006-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_06_all$facet_dates
+
+dec_06_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2006-12-01T00:00:00Z",facet.date.end = "2006-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_06_all$facet_dates
+
+
+jan_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-01-01T00:00:00Z",facet.date.end = "2007-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_07_all$facet_dates
+
+feb_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-02-01T00:00:00Z",facet.date.end = "2007-02-28T00:00:00Z", facet.date.gap='+1MONTH')
+feb_07_all$facet_dates
+
+mar_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-03-01T00:00:00Z",facet.date.end = "2007-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_07_all$facet_dates
+
+apr_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-04-01T00:00:00Z",facet.date.end = "2007-04-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_07_all$facet_dates
+
+
+may_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-05-01T00:00:00Z",facet.date.end = "2007-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_07_all$facet_dates
+
+jun_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-06-01T00:00:00Z",facet.date.end = "2007-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_07_all$facet_dates
+
+jly_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-07-01T00:00:00Z",facet.date.end = "2007-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_07_all$facet_dates
+
+aug_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-08-01T00:00:00Z",facet.date.end = "2007-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_07_all$facet_dates
+
+sept_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-09-01T00:00:00Z",facet.date.end = "2007-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_07_all$facet_dates
+
+oct_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-10-01T00:00:00Z",facet.date.end = "2007-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_07_all$facet_dates
+
+nov_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-11-01T00:00:00Z",facet.date.end = "2007-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_07_all$facet_dates
+
+dec_07_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2007-12-01T00:00:00Z",facet.date.end = "2007-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_07_all$facet_dates
+
+jan_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-01-01T00:00:00Z",facet.date.end = "2008-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_08_all$facet_dates
+
+feb_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-02-01T00:00:00Z",facet.date.end = "2008-02-29T00:00:00Z", facet.date.gap='+1MONTH')
+feb_08_all$facet_dates
+
+mar_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-03-01T00:00:00Z",facet.date.end = "2008-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_08_all$facet_dates
+
+apr_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-04-01T00:00:00Z",facet.date.end = "2008-04-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_08_all$facet_dates
+
+may_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-05-01T00:00:00Z",facet.date.end = "2008-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_08_all$facet_dates
+
+jun_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-06-01T00:00:00Z",facet.date.end = "2008-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_08_all$facet_dates
+
+jly_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-07-01T00:00:00Z",facet.date.end = "2008-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_08_all$facet_dates
+
+aug_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-08-01T00:00:00Z",facet.date.end = "2008-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_08_all$facet_dates
+
+sept_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-09-01T00:00:00Z",facet.date.end = "2008-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_08_all$facet_dates
+
+oct_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-10-01T00:00:00Z",facet.date.end = "2008-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_08_all$facet_dates
+
+nov_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-11-01T00:00:00Z",facet.date.end = "2008-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_08_all$facet_dates
+
+dec_08_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2008-12-01T00:00:00Z",facet.date.end = "2008-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_08_all$facet_dates
+
+jan_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-01-01T00:00:00Z",facet.date.end = "2009-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_09_all$facet_dates
+
+feb_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-02-01T00:00:00Z",facet.date.end = "2009-02-28T00:00:00Z", facet.date.gap='+1MONTH')
+feb_09_all$facet_dates
+
+mar_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-03-01T00:00:00Z",facet.date.end = "2009-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_09_all$facet_dates
+
+apr_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-04-01T00:00:00Z",facet.date.end = "2009-04-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_09_all$facet_dates
+
+may_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-05-01T00:00:00Z",facet.date.end = "2009-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_09_all$facet_dates
+
+jun_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-06-01T00:00:00Z",facet.date.end = "2009-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_09_all$facet_dates
+
+jly_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-07-01T00:00:00Z",facet.date.end = "2009-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_09_all$facet_dates
+
+aug_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-08-01T00:00:00Z",facet.date.end = "2009-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_09_all$facet_dates
+
+sept_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-09-01T00:00:00Z",facet.date.end = "2009-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_09_all$facet_dates
+
+oct_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-10-01T00:00:00Z",facet.date.end = "2009-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_09_all$facet_dates
+
+nov_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-11-01T00:00:00Z",facet.date.end = "2009-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_09_all$facet_dates
+
+dec_09_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2009-12-01T00:00:00Z",facet.date.end = "2009-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_09_all$facet_dates
+
+jan_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-01-01T00:00:00Z",facet.date.end = "2010-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_10_all$facet_dates
+
+feb_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-02-01T00:00:00Z",facet.date.end = "2010-02-28T00:00:00Z", facet.date.gap='+1MONTH')
+feb_10_all$facet_dates
+
+mar_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-03-01T00:00:00Z",facet.date.end = "2010-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_10_all$facet_dates
+
+apr_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-04-01T00:00:00Z",facet.date.end = "2010-04-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_10_all$facet_dates
+
+may_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-05-01T00:00:00Z",facet.date.end = "2010-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_10_all$facet_dates
+
+jun_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-06-01T00:00:00Z",facet.date.end = "2010-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_10_all$facet_dates
+
+jly_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-07-01T00:00:00Z",facet.date.end = "2010-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_10_all$facet_dates
+
+aug_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-08-01T00:00:00Z",facet.date.end = "2010-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_10_all$facet_dates
+
+sept_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-09-01T00:00:00Z",facet.date.end = "2010-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_10_all$facet_dates
+
+oct_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-10-01T00:00:00Z",facet.date.end = "2010-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_10_all$facet_dates
+
+nov_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-11-01T00:00:00Z",facet.date.end = "2010-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_10_all$facet_dates
+
+dec_10_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2010-12-01T00:00:00Z",facet.date.end = "2010-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_10_all$facet_dates
+
+jan_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-01-01T00:00:00Z",facet.date.end = "2011-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_11_all$facet_dates
+
+feb_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-02-01T00:00:00Z",facet.date.end = "2011-02-28T00:00:00Z", facet.date.gap='+1MONTH')
+feb_11_all$facet_dates
+
+mar_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-03-01T00:00:00Z",facet.date.end = "2011-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_11_all$facet_dates
+
+apr_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-04-01T00:00:00Z",facet.date.end = "2011-04-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_11_all$facet_dates
+
+may_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-05-01T00:00:00Z",facet.date.end = "2011-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_11_all$facet_dates
+
+jun_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-06-01T00:00:00Z",facet.date.end = "2011-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_11_all$facet_dates
+
+jly_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-07-01T00:00:00Z",facet.date.end = "2011-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_11_all$facet_dates
+
+aug_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-08-01T00:00:00Z",facet.date.end = "2011-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_11_all$facet_dates
+
+sept_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-09-01T00:00:00Z",facet.date.end = "2011-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_11_all$facet_dates
+
+oct_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-10-01T00:00:00Z",facet.date.end = "2011-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_11_all$facet_dates
+
+nov_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-11-01T00:00:00Z",facet.date.end = "2011-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_11_all$facet_dates
+
+dec_11_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2011-12-01T00:00:00Z",facet.date.end = "2011-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_11_all$facet_dates
+
+jan_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-01-01T00:00:00Z",facet.date.end = "2012-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_12_all$facet_dates
+
+feb_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-02-01T00:00:00Z",facet.date.end = "2012-02-29T00:00:00Z", facet.date.gap='+1MONTH')
+feb_12_all$facet_dates
+
+mar_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-03-01T00:00:00Z",facet.date.end = "2012-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_12_all$facet_dates
+
+apr_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-04-01T00:00:00Z",facet.date.end = "2012-04-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_12_all$facet_dates
+
+may_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-05-01T00:00:00Z",facet.date.end = "2012-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_12_all$facet_dates
+
+jun_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-06-01T00:00:00Z",facet.date.end = "2012-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_12_all$facet_dates
+
+jly_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-07-01T00:00:00Z",facet.date.end = "2012-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_12_all$facet_dates
+
+
+aug_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-08-01T00:00:00Z",facet.date.end = "2012-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_12_all$facet_dates
+
+sept_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-09-01T00:00:00Z",facet.date.end = "2012-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_12_all$facet_dates
+
+oct_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-10-01T00:00:00Z",facet.date.end = "2012-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_12_all$facet_dates
+
+nov_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-11-01T00:00:00Z",facet.date.end = "2012-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_12_all$facet_dates
+
+dec_12_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2012-12-01T00:00:00Z",facet.date.end = "2012-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_12_all$facet_dates
+
+jan_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-01-01T00:00:00Z",facet.date.end = "2013-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_13_all$facet_dates
+
+feb_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-02-01T00:00:00Z",facet.date.end = "2013-02-28T00:00:00Z", facet.date.gap='+1MONTH')
+feb_13_all$facet_dates
+
+mar_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-03-01T00:00:00Z",facet.date.end = "2013-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_13_all$facet_dates
+
+apr_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-04-01T00:00:00Z",facet.date.end = "2013-04-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_13_all$facet_dates
+
+may_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-05-01T00:00:00Z",facet.date.end = "2013-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_13_all$facet_dates
+
+jun_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-06-01T00:00:00Z",facet.date.end = "2013-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_13_all$facet_dates
+
+jly_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-07-01T00:00:00Z",facet.date.end = "2013-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_13_all$facet_dates
+
+aug_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-08-01T00:00:00Z",facet.date.end = "2013-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_13_all$facet_dates
+
+sept_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-09-01T00:00:00Z",facet.date.end = "2013-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_13_all$facet_dates
+
+oct_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-31-01T00:00:00Z",facet.date.end = "2013-31-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_13_all$facet_dates
+
+nov_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-11-01T00:00:00Z",facet.date.end = "2013-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_13_all$facet_dates
+
+dec_13_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2013-12-01T00:00:00Z",facet.date.end = "2013-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_13_all$facet_dates
+
+jan_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-01-01T00:00:00Z",facet.date.end = "2014-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_14_all$facet_dates
+
+feb_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-02-01T00:00:00Z",facet.date.end = "2014-02-28T00:00:00Z", facet.date.gap='+1MONTH')
+feb_14_all$facet_dates
+
+mar_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-03-01T00:00:00Z",facet.date.end = "2014-03-31T00:00:00Z", facet.date.gap='+1MONTH')
+mar_14_all$facet_dates
+
+apr_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-04-01T00:00:00Z",facet.date.end = "2014-04-30T00:00:00Z", facet.date.gap='+1MONTH')
+apr_14_all$facet_dates
+
+may_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-05-01T00:00:00Z",facet.date.end = "2014-05-31T00:00:00Z", facet.date.gap='+1MONTH')
+may_14_all$facet_dates
+
+jun_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-06-01T00:00:00Z",facet.date.end = "2014-06-30T00:00:00Z", facet.date.gap='+1MONTH')
+jun_14_all$facet_dates
+
+jly_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-07-01T00:00:00Z",facet.date.end = "2014-07-31T00:00:00Z", facet.date.gap='+1MONTH')
+jly_14_all$facet_dates
+
+aug_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-08-01T00:00:00Z",facet.date.end = "2014-08-31T00:00:00Z", facet.date.gap='+1MONTH')
+aug_14_all$facet_dates
+
+sept_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-09-01T00:00:00Z",facet.date.end = "2014-09-30T00:00:00Z", facet.date.gap='+1MONTH')
+sept_14_all$facet_dates
+
+oct_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-10-01T00:00:00Z",facet.date.end = "2014-10-31T00:00:00Z", facet.date.gap='+1MONTH')
+oct_14_all$facet_dates
+
+nov_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-11-01T00:00:00Z",facet.date.end = "2014-11-30T00:00:00Z", facet.date.gap='+1MONTH')
+nov_14_all$facet_dates
+
+dec_14_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2014-12-01T00:00:00Z",facet.date.end = "2014-12-31T00:00:00Z", facet.date.gap='+1MONTH')
+dec_14_all$facet_dates
+
+jan_15_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2015-01-01T00:00:00Z",facet.date.end = "2015-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_15_all$facet_dates
+
+feb_15_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2015-02-01T00:00:00Z",facet.date.end = "2015-02-28T00:00:00Z", facet.date.gap='+1MONTH')
+feb_15_all$facet_dates
+
+mar_15_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-03-01T00:00:00Z", facet.date.end="2015-03-31T00:00:00Z",facet.date.gap="+1MONTH")
+mar_15_all$facet_dates
+
+apr_15_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-04-01T00:00:00Z", facet.date.end="2015-04-30T00:00:00Z",facet.date.gap="+1MONTH")
+apr_15_all$facet_dates
+
+may_15_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-05-01T00:00:00Z", facet.date.end="2015-05-31T00:00:00Z",facet.date.gap="+1MONTH")
+may_15_all$facet_dates
+
+
+jun_15_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-06-01T00:00:00Z", facet.date.end="2015-06-30T00:00:00Z",facet.date.gap="+1MONTH")
+jun_15_all$facet_dates
+
+jly_15_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-07-01T00:00:00Z", facet.date.end="2015-07-31T00:00:00Z",facet.date.gap="+1MONTH")
+jly_15_all$facet_dates
+
+aug_15_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-08-01T00:00:00Z", facet.date.end="2015-08-31T00:00:00Z",facet.date.gap="+1MONTH")
+aug_15_all$facet_dates
+
+sept_15_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-09-01T00:00:00Z", facet.date.end="2015-09-30T00:00:00Z",facet.date.gap="+1MONTH")
+sept_15_all$facet_dates
+
+oct_15_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-10-01T00:00:00Z", facet.date.end="2015-10-31T00:00:00Z",facet.date.gap="+1MONTH")
+oct_15_all$facet_dates
+
+nov_15_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-11-01T00:00:00Z", facet.date.end="2015-11-30T00:00:00Z",facet.date.gap="+1MONTH")
+nov_15_all$facet_dates
+
+dec_15_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-12-01T00:00:00Z", facet.date.end="2015-12-31T00:00:00Z",facet.date.gap="+1MONTH")
+dec_15_all$facet_dates
+
+
+jan_16_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2016-01-01T00:00:00Z",facet.date.end = "2016-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_16_all$facet_dates
+
+feb_16_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2016-02-01T00:00:00Z",facet.date.end = "2016-02-29T00:00:00Z", facet.date.gap='+1MONTH')
+feb_16_all$facet_dates
+
+mar_16_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2016-03-01T00:00:00Z", facet.date.end="2016-03-31T00:00:00Z",facet.date.gap="+1MONTH")
+mar_16_all$facet_dates
+
+apr_16_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2016-04-01T00:00:00Z", facet.date.end="2016-04-30T00:00:00Z",facet.date.gap="+1MONTH")
+apr_16_all$facet_dates
+
+may_16_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2016-05-01T00:00:00Z", facet.date.end="2016-05-31T00:00:00Z",facet.date.gap="+1MONTH")
+may_16_all$facet_dates
+
+
+jun_16_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2016-06-01T00:00:00Z", facet.date.end="2016-06-30T00:00:00Z",facet.date.gap="+1MONTH")
+jun_16_all$facet_dates
+
+jly_16_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2016-07-01T00:00:00Z", facet.date.end="2016-07-31T00:00:00Z",facet.date.gap="+1MONTH")
+jly_16_all$facet_dates
+
+aug_16_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2016-08-01T00:00:00Z", facet.date.end="2016-08-31T00:00:00Z",facet.date.gap="+1MONTH")
+aug_16_all$facet_dates
+
+sept_16_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2015-09-01T00:00:00Z", facet.date.end="2016-09-30T00:00:00Z",facet.date.gap="+1MONTH")
+sept_16_all$facet_dates
+
+oct_16_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2016-10-01T00:00:00Z", facet.date.end="2016-10-31T00:00:00Z",facet.date.gap="+1MONTH")
+oct_16_all$facet_dates
+
+nov_16_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2016-11-01T00:00:00Z", facet.date.end="2016-11-30T00:00:00Z",facet.date.gap="+1MONTH")
+nov_16_all$facet_dates
+
+dec_16_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2016-12-01T00:00:00Z", facet.date.end="2016-12-31T00:00:00Z",facet.date.gap="+1MONTH")
+dec_16_all$facet_dates
+
+
+jan_17_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2017-01-01T00:00:00Z",facet.date.end = "2017-01-31T00:00:00Z", facet.date.gap='+1MONTH')
+jan_17_all$facet_dates
+
+feb_17_all<- facetplos(facet.query='the',facet.field='journal', facet.date='publication_date', facet.date.start="2017-02-01T00:00:00Z",facet.date.end = "2017-02-29T00:00:00Z", facet.date.gap='+1MONTH')
+feb_17_all$facet_dates
+
+mar_17_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2017-03-01T00:00:00Z", facet.date.end="2017-03-31T00:00:00Z",facet.date.gap="+1MONTH")
+mar_17_all$facet_dates
+
+apr_17_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2017-04-01T00:00:00Z", facet.date.end="2017-04-30T00:00:00Z",facet.date.gap="+1MONTH")
+apr_17_all$facet_dates
+
+may_17_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2017-05-01T00:00:00Z", facet.date.end="2017-05-31T00:00:00Z",facet.date.gap="+1MONTH")
+may_17_all$facet_dates
+
+
+jun_17_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2017-06-01T00:00:00Z", facet.date.end="2017-06-30T00:00:00Z",facet.date.gap="+1MONTH")
+jun_17_all$facet_dates
+
+jly_17_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2017-07-01T00:00:00Z", facet.date.end="2017-07-31T00:00:00Z",facet.date.gap="+1MONTH")
+jly_17_all$facet_dates
+
+aug_17_all<- facetplos(facet.query='the',facet.field='journal',facet.date='publication_date',facet.date.start="2017-08-01T00:00:00Z", facet.date.end="2017-08-31T00:00:00Z",facet.date.gap="+1MONTH")
+aug_17_all$facet_dates
+
+sept_17_allA<- facetplos(facet.date='publication_date',facet.date.start="2017-09-01T00:00:00Z", facet.date.end="2017-09-30T00:00:00Z",facet.date.gap="+1MONTH")
+sept_17_allA
+
+sept_17_all<- facetplos(facet.query="the",facet.date='publication_date',facet.date.start="2017-09-01T00:00:00Z", facet.date.end="2017-09-30T00:00:00Z",facet.date.gap="+1MONTH")
+sept_17_all
+
+
+
+sept_17_all<- facetplos(facet.field='journal',facet.date='publication_date',facet.date.start="2017-09-01T00:00:00Z", facet.date.end="2017-09-30T00:00:00Z",facet.date.gap="+1MONTH")
+sept_17_all
+
+?facetplos
+
+plosfields
+?searchplos
+```
+
+
+
+
+
+
+
+
