@@ -1,5 +1,5 @@
 ---
-title: "Plots"
+title: "Code for writeup"
 author: "Sophie_Berube"
 date: "10/10/2017"
 output: pdf_document
@@ -225,5 +225,141 @@ Btstp_NN
 
 
 ```
+```{r}
 
+library(rplos)
+ANOVA<- plot_throughtime(terms=c("ANOVA"),limit=10000)
+
+
+upward_ANOVA<-ANOVA$data[1:117,]
+downward_ANOVA<-ANOVA$data[118:151,]
+
+ANOVA_model_up<- glm(upward_ANOVA$value~upward_ANOVA$dateplot,family="quasipoisson")
+summary(ANOVA_model_up)
+
+ANOVA_model_down<- glm(downward_ANOVA$value~downward_ANOVA$dateplot,family="quasipoisson")
+
+summary(ANOVA_model_down)
+
+
+Bayesian<- plot_throughtime(terms=c("bayesian"),limit=10000)
+
+
+upward_Bayesian<-Bayesian$data[1:121,]
+downward_Bayesian<-Bayesian$data[122:155,]
+
+Bayesian_model_up<- glm(upward_Bayesian$value~upward_Bayesian$dateplot,family="quasipoisson")
+summary(Bayesian_model_up)
+
+Bayesian_model_down<- glm(downward_Bayesian$value~downward_Bayesian$dateplot,family="quasipoisson")
+
+summary(Bayesian_model_down)
+
+
+LR<- plot_throughtime(terms=c("linear regression"),limit=10000)
+
+
+upward_LR<-LR$data[1:121,]
+downward_LR<-LR$data[122:155,]
+
+LR_model_up<- glm(upward_LR$value~upward_LR$dateplot,family="quasipoisson")
+summary(LR_model_up)
+
+LR_model_down<- glm(downward_LR$value~downward_LR$dateplot,family="quasipoisson")
+
+summary(LR_model_down)
+
+MM<- plot_throughtime(terms=c("mixed effect model"),limit=10000)
+
+
+upward_MM<-MM$data[1:120,]
+downward_MM<-MM$data[121:154,]
+
+MM_model_up<- glm(upward_MM$value~upward_MM$dateplot,family="quasipoisson")
+summary(MM_model_up)
+
+MM_model_down<- glm(downward_MM$value~downward_MM$dateplot,family="quasipoisson")
+
+summary(MM_model_down)
+
+GEE<- plot_throughtime(terms=c("generalized estimating equation"),limit=10000)
+
+
+upward_GEE<-GEE$data[1:120,]
+downward_GEE<-GEE$data[121:163,]
+
+GEE_model_up<- glm(upward_GEE$value~upward_GEE$dateplot,family="quasipoisson")
+summary(GEE_model_up)
+
+GEE_model_down<- glm(downward_GEE$value~downward_GEE$dateplot,family="quasipoisson")
+
+summary(GEE_model_down)
+
+Btstp<- plot_throughtime(terms=c("bootstrap"),limit=10000)
+
+
+upward_Btstp<-Btstp$data[1:127,]
+downward_Btstp<-Btstp$data[128:161,]
+
+Btstp_model_up<- glm(upward_Btstp$value~upward_Btstp$dateplot,family="quasipoisson")
+summary(Btstp_model_up)
+
+Btstp_model_down<- glm(downward_Btstp$value~downward_Btstp$dateplot,family="quasipoisson")
+
+summary(Btstp_model_down)
+
+ML<- plot_throughtime(terms=c("machine learning"),limit=10000)
+
+
+upward_ML<-ML$data[1:127,]
+downward_ML<-ML$data[128:161,]
+
+ML_model_up<- glm(upward_ML$value~upward_ML$dateplot,family="quasipoisson")
+summary(ML_model_up)
+
+ML_model_down<- glm(downward_ML$value~downward_ML$dateplot,family="quasipoisson")
+
+summary(ML_model_down)
+
+SVM<- plot_throughtime(terms=c("support vector machine"),limit=10000)
+
+
+upward_SVM<-SVM$data[1:120,]
+downward_SVM<-SVM$data[121:163,]
+
+SVM_model_up<- glm(upward_SVM$value~upward_SVM$dateplot,family="quasipoisson")
+summary(SVM_model_up)
+
+SVM_model_down<- glm(downward_SVM$value~downward_SVM$dateplot,family="quasipoisson")
+
+summary(SVM_model_down)
+
+DL<- plot_throughtime(terms=c("deep learning"),limit=10000)
+
+
+upward_DL<-DL$data[1:126,]
+downward_DL<-DL$data[127:160,]
+
+DL_model_up<- glm(upward_DL$value~upward_DL$dateplot,family="quasipoisson")
+summary(DL_model_up)
+
+DL_model_down<- glm(downward_DL$value~downward_DL$dateplot,family="quasipoisson")
+
+summary(DL_model_down)
+
+NN<- plot_throughtime(terms=c("artificial neural network"),limit=10000)
+
+
+upward_NN<-NN$data[1:125,]
+downward_NN<-NN$data[126:159,]
+
+NN_model_up<- glm(upward_NN$value~upward_NN$dateplot,family="quasipoisson")
+summary(NN_model_up)
+
+NN_model_down<- glm(downward_NN$value~downward_NN$dateplot,family="quasipoisson")
+
+summary(NN_model_down)
+
+
+```
 
