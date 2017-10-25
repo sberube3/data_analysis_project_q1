@@ -10,7 +10,7 @@ ANOVA<- facetplos(q='ANOVA',facet.field=c('journal','subject'),facet.query='ANOV
 str(ANOVA$facet_fields$journal)
 str(ANOVA$facet_fields$subject)
 
-bayes<- facetplos(q="*:*",facet.field=c('journal', 'subject'),facet.query='bayes,bayesian')
+bayes<- facetplos(q="bayes,bayesian",facet.field=c('journal', 'subject'),facet.query='bayes,bayesian')
 str(bayes$facet_fields$journal)
 str(bayes$facet_fields$subject)
 
@@ -147,8 +147,8 @@ output_B
 output_LR<- highplos(q='linear regression',hl.fl='body',rows=10)
 output_LR
 
-output_LMM<-highplos(q='linear mixed models',hl.fl='body',rows=10)
-output_LMM
+output_MM<-highplos(q='mixed effect models',hl.fl='body',rows=10)
+output_MM
 
 output_MM<- highplos(q='mixed models',hl.fl='materials_and_methods',rows=10)
 output_MM
@@ -715,16 +715,336 @@ sept_17_all
 sept_17_all<- facetplos(facet.field='journal',facet.date='publication_date',facet.date.start="2017-09-01T00:00:00Z", facet.date.end="2017-09-30T00:00:00Z",facet.date.gap="+1MONTH")
 sept_17_all
 
-?facetplos
 
-plosfields
-?searchplos
+
+sept_17_ANOVA<- facetplos(facet.field='publication_date',facet.query="regression")
+
+
+sapply((sept_17_ANOVA[[2]])[[1]],unlist)
+matrix(unlist(sept_17_ANOVA[[2]]),ncol=2)
+
+
+
+
+```
+
+
+
+```{r}
+ANOVA_ML<- plot_throughtime(terms=c("bootstrap","support vector machines"),limit=10000) + geom_line(size=1,color="black")
+
+ANOVA_ML
+
+```
+
+
+
+
+```{r}
+list("ANOVA", "bayes", "bayesian","linear regression","linear mixed models", "mixed models","generalized estimating equations", "machine learning", "support vector machine", "bootstrap", "deep learning","neural network")
+
+#pairwise comparisons ANOVA
+
+ANOVA_Bayesian<- plot_throughtime(terms=c("ANOVA","bayesian"),limit=10000) + geom_line(size=1,color="black")
+
+ANOVA_Bayesian
+
+ANOVA_LR<- plot_throughtime(terms=c("ANOVA","linear regression"),limit=10000) + geom_line(size=1,color="black")
+
+ANOVA_LR
+
+ANOVA_MM<- plot_throughtime(terms=c("ANOVA","mixed effect model"),limit=10000) + geom_line(size=1,color="black")
+
+ANOVA_MM
+
+ANOVA_GEE<- plot_throughtime(terms=c("ANOVA","generalized estimating equation"),limit=10000) + geom_line(size=1,color="black")
+ANOVA_GEE
+
+ANOVA_ML<-  plot_throughtime(terms=c("ANOVA","machine learning"),limit=10000) + geom_line(size=1,color="black")
+
+ANOVA_ML
+
+ANOVA_SVM<-  plot_throughtime(terms=c("ANOVA","support vector machine"),limit=10000) + geom_line(size=1,color="black")
+
+ANOVA_SVM
+
+ANOVA_DL<-  plot_throughtime(terms=c("ANOVA","deep learning"),limit=10000) + geom_line(size=1,color="black")
+
+ANOVA_DL
+
+ANOVA_Btstp<-  plot_throughtime(terms=c("ANOVA","bootstrap"),limit=10000) + geom_line(size=1,color="black")
+
+ANOVA_Btstp
+
+ANOVA_NN<-  plot_throughtime(terms=c("ANOVA","artificial neural network"),limit=10000) + geom_line(size=1,color="black")
+
+ANOVA_NN
+
+
+
+#pairwise comparisons bayesian
+
+Bayesian_LR<- plot_throughtime(terms=c("linear regression","bayesian"),limit=10000) + geom_line(size=1,color="black")
+
+Bayesian_LR
+
+Bayesian_MM<- plot_throughtime(terms=c("bayesian","mixed effect model"),limit=10000) + geom_line(size=1,color="black")
+
+Bayesian_MM
+
+Bayesian_GEE<- plot_throughtime(terms=c("bayesian","generalized estimating equation"),limit=10000) + geom_line(size=1,color="black")
+Bayesian_GEE
+
+Bayesian_ML<-  plot_throughtime(terms=c("bayesian","machine learning"),limit=10000) + geom_line(size=1,color="black")
+
+Bayesian_ML
+
+Bayesian_SVM<-  plot_throughtime(terms=c("bayesian","support vector machine"),limit=10000) + geom_line(size=1,color="black")
+
+Bayesian_SVM
+
+Bayesian_DL<-  plot_throughtime(terms=c("bayesian","deep learning"),limit=10000) + geom_line(size=1,color="black")
+
+Bayesian_DL
+
+Bayesian_Btstp<-  plot_throughtime(terms=c("bayesian","bootstrap"),limit=10000) + geom_line(size=1,color="black")
+
+Bayesian_Btstp
+
+Bayesian_NN<-  plot_throughtime(terms=c("bayesian","artificial neural network"),limit=10000) + geom_line(size=1,color="black")
+
+Bayesian_NN
+
+
+#pairwise comparisons linear regression
+
+
+LR_MM<- plot_throughtime(terms=c("linear regression","mixed effect model"),limit=10000) + geom_line(size=1,color="black")
+
+LR_MM
+
+LR_GEE<- plot_throughtime(terms=c("linear regression","generalized estimating equation"),limit=10000) + geom_line(size=1,color="black")
+LR_GEE
+
+LR_ML<-  plot_throughtime(terms=c("linear regression","machine learning"),limit=10000) + geom_line(size=1,color="black")
+
+LR_ML
+
+LR_SVM<-  plot_throughtime(terms=c("linear regression","support vector machine"),limit=10000) + geom_line(size=1,color="black")
+
+LR_SVM
+
+LR_DL<-  plot_throughtime(terms=c("linear regression","deep learning"),limit=10000) + geom_line(size=1,color="black")
+
+LR_DL
+
+LR_Btstp<-  plot_throughtime(terms=c("linear regression","bootstrap"),limit=10000) + geom_line(size=1,color="black")
+
+LR_Btstp
+
+LR_NN<-  plot_throughtime(terms=c("linear regression","artificial neural network"),limit=10000) + geom_line(size=1,color="black")
+
+LR_NN
+
+
+
+#pairwise comparisons mixed models
+
+
+
+MM_GEE<- plot_throughtime(terms=c("mixed effect model","generalized estimating equation"),limit=10000) + geom_line(size=1,color="black")
+MM_GEE
+
+MM_ML<-  plot_throughtime(terms=c("mixed effect model","machine learning"),limit=10000) + geom_line(size=1,color="black")
+MM_ML
+
+MM_SVM<-  plot_throughtime(terms=c("mixed effect model","support vector machine"),limit=10000) + geom_line(size=1,color="black")
+
+MM_SVM
+
+MM_DL<-  plot_throughtime(terms=c("mixed effect model","deep learning"),limit=10000) + geom_line(size=1,color="black")
+
+MM_DL
+
+MM_Btstp<-  plot_throughtime(terms=c("mixed effect model","bootstrap"),limit=10000) + geom_line(size=1,color="black")
+
+MM_Btstp
+
+MM_NN<-  plot_throughtime(terms=c("mixed effect model","artificial neural network"),limit=10000) + geom_line(size=1,color="black")
+
+MM_NN
+
+
+
+#pairwise comparisons gee
+
+GEE_ML<-  plot_throughtime(terms=c("generalized estimating equation","machine learning"),limit=10000) + geom_line(size=1,color="black")
+GEE_ML
+
+GEE_SVM<-  plot_throughtime(terms=c("generalized estimating equation","support vector machine"),limit=10000) + geom_line(size=1,color="black")
+
+GEE_SVM
+
+GEE_DL<-  plot_throughtime(terms=c("generalized estimating equation","deep learning"),limit=10000) + geom_line(size=1,color="black")
+
+GEE_DL
+
+GEE_Btstp<-  plot_throughtime(terms=c("generalized estimating equation","bootstrap"),limit=10000) + geom_line(size=1,color="black")
+
+GEE_Btstp
+
+GEE_NN<-  plot_throughtime(terms=c("generalized estimating equation","artificial neural network"),limit=10000) + geom_line(size=1,color="black")
+
+GEE_NN
+
+
+
+
+#pairwise comparisons machine learning
+
+ML_SVM<-  plot_throughtime(terms=c("machine learning","support vector machine"),limit=10000) + geom_line(size=1,color="black")
+
+ML_SVM
+
+ML_DL<-  plot_throughtime(terms=c("machine learning","deep learning"),limit=10000) + geom_line(size=1,color="black")
+
+ML_DL
+
+ML_Btstp<-  plot_throughtime(terms=c("machine learning","bootstrap"),limit=10000) + geom_line(size=1,color="black")
+
+ML_Btstp
+
+ML_NN<-  plot_throughtime(terms=c("machine learning","artificial neural network"),limit=10000) + geom_line(size=1,color="black")
+
+ML_NN
+
+
+
+#pairwise comparisons support vector machine
+
+
+SVM_DL<-  plot_throughtime(terms=c("support vector machine","deep learning"),limit=10000) + geom_line(size=1,color="black")
+
+SVM_DL
+
+SVM_Btstp<-  plot_throughtime(terms=c("support vector machine","bootstrap"),limit=10000) + geom_line(size=1,color="black")
+
+SVM_Btstp
+
+SVM_NN<-  plot_throughtime(terms=c("machine learning","artificial neural network"),limit=10000) + geom_line(size=1,color="black")
+
+SVM_NN
+
+
+#pairwise comparisons deep learning
+
+
+
+DL_Btstp<-  plot_throughtime(terms=c("deep learning","bootstrap"),limit=10000) + geom_line(size=1,color="black")
+
+DL_Btstp
+
+DL_NN<-  plot_throughtime(terms=c("deep learning","artificial neural network"),limit=10000) + geom_line(size=1,color="black")
+
+DL_NN
+
+
+#pairwise comparisons bootstrap
+
+
+Btstp_NN<-  plot_throughtime(terms=c("bootstrap","artificial neural network"),limit=10000) + geom_line(size=1,color="black")
+
+Btstp_NN
+```
+library(dplyr)
+
+# what happens when you expect two models to be similar
+
+#novabayes_DF<-right_join(ANOVA$data[,c(1,3)],Bayesian$data[,c(1,3)],by="dateplot")
+colnames(anovabayes_DF)<-list("dateplot","ANOVA","BAYES")
+anovabayes<- na.omit(anovabayes_DF)
+anovabayes
+
+ANOVA_bayes_1<- glm(formula=anovabayes$ANOVA~anovabayes$dateplot, family=poisson)
+summary(ANOVA_bayes_1)
+
+ANOVA_bayes_2<- glm(formula=anovabayes$ANOVA~(anovabayes$dateplot+anovabayes$BAYES+
+                      anovabayes$BAYES*anovabayes$dateplot), family=poisson)
+summary(ANOVA_bayes_2)
+
+
+#what happens when you expect two models to be different
+anovaml_DF<-right_join(ANOVA$data[,c(1,3)],ML$data[,c(1,3)],by="dateplot")
+colnames(anovaml_DF)<-list("dateplot","ANOVA","MachineLearning")
+anovaml<- na.omit(anovaml_DF)
+anovaml$dateplot
+
+
+dim(NN$data)
+
+ANOVA_ML_1<- glm(formula=anovaml$ANOVA~anovaml$dateplot, family=quasipoisson)
+summary(ANOVA_ML_1)
+
+ANOVA_ML_2<- glm(formula=anovaml$ANOVA~(anovaml$dateplot+anovaml$MachineLearning+
+                      anovaml$MachineLearning*anovaml$dateplot),
+                 family=quasipoisson)
+summary(ANOVA_ML_2)
+
+#try 2
+anovadl_DF<-right_join(ANOVA$data[,c(1,3)],DL$data[,c(1,3)],by="dateplot")
+colnames(anovadl_DF)<-list("dateplot","ANOVA","DeepLearning")
+anovadl<- na.omit(anovadl_DF)
+anovadl
+
+ANOVA_DL_1<- glm(formula=anovadl$ANOVA~anovadl$dateplot, family=quasipoisson)
+summary(ANOVA_DL_1)
+
+ANOVA_DL_2<- glm(formula=anovadl$ANOVA~(anovadl$dateplot+anovadl$DeepLearning+
+                      anovadl$DeepLearning*anovadl$dateplot),
+                 family=quasipoisson)
+summary(ANOVA_DL_2)
+
 ```
 
 
 
 
 
+```{r}
+
+anovaml_up<- anovaml[128:161,]
+
+anovaml_down<- anovaml[1:127,]
+
+difference_test_anova<- glm(anovaml_up$ANOVA~anovaml_up$dateplot,family=quasipoisson)
+summary(difference_test_anova)
 
 
+difference_test_2<- glm(anovaml_up$ANOVA~anovaml_up$dateplot+anovaml_up$MachineLearning,family=quasipoisson)
+summary(difference_test_2)
 
+
+difference_test_1_anova<-  glm(anovaml_down$ANOVA~anovaml_down$dateplot,family=quasipoisson)
+summary(difference_test_1_anova)
+
+
+difference_test_2_anova<-  glm(anovaml_down$ANOVA~anovaml_down$dateplot+anovaml_down$MachineLearning,family=quasipoisson)
+summary(difference_test_2_anova)
+
+
+##################################
+
+
+difference_test_ML<- glm(anovaml_up$MachineLearning~anovaml_up$dateplot,family=quasipoisson)
+summary(difference_test_ML)
+
+
+difference_test_ML_1<- glm(anovaml_down$MachineLearning~anovaml_down$dateplot,family=quasipoisson)
+summary(difference_test_ML_1)
+
+difference_test_ML_joint<-  glm(anovaml_down$MachineLearning~anovaml_down$dateplot+anovaml_down$ANOVA,family=quasipoisson)
+summary(difference_test_ML_joint)
+
+difference_test_ML_joint_1<-  glm(anovaml_up$MachineLearning~anovaml_up$dateplot+anovaml_up$ANOVA,family=quasipoisson)
+summary(difference_test_ML_joint_1)
+```
